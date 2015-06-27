@@ -47,6 +47,11 @@
 //    
 //}
 
+- (void)prepareLayout {
+
+}
+
+
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSArray* attributesForAllRectElements = [super layoutAttributesForElementsInRect:rect];
     
@@ -72,9 +77,9 @@
         attributesForSingleElement.alpha =  distanceFromCenterInRangeZeroToOne;
         //attributesForSingleElement.transform = CGAffineTransformMakeRotation(0.2);
         
-        CGFloat itemScaleFactor = 0.74;
+        CGFloat itemScaleFactor = 1;
         //if (distanceFromCenterInRangeZeroToOne > 0.8) {
-            itemScaleFactor = itemScaleFactor + distanceFromCenterInRangeZeroToOne*0.4;
+            itemScaleFactor = itemScaleFactor + distanceFromCenterInRangeZeroToOne*0.45;
         //}
         
         attributesForSingleElement.zIndex = distanceFromCenterInRangeZeroToOne*100;
