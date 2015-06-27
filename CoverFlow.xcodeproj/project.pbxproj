@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		2755713F1B3DDE3900552BC7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2755713E1B3DDE3900552BC7 /* main.m */; };
 		275571421B3DDE3900552BC7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 275571411B3DDE3900552BC7 /* AppDelegate.m */; };
-		275571451B3DDE3900552BC7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275571441B3DDE3900552BC7 /* ViewController.m */; };
 		275571481B3DDE3900552BC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 275571461B3DDE3900552BC7 /* Main.storyboard */; };
 		2755714A1B3DDE3900552BC7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 275571491B3DDE3900552BC7 /* Images.xcassets */; };
 		2755714D1B3DDE3900552BC7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2755714B1B3DDE3900552BC7 /* LaunchScreen.xib */; };
 		275571591B3DDE3900552BC7 /* CoverFlowTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 275571581B3DDE3900552BC7 /* CoverFlowTests.m */; };
+		275571641B3DDEC800552BC7 /* CoverFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275571631B3DDEC800552BC7 /* CoverFlowViewController.m */; };
+		275571671B3DE0A600552BC7 /* CoverFlowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275571661B3DE0A600552BC7 /* CoverFlowCell.m */; };
+		2755716A1B3DE9FF00552BC7 /* CoverFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 275571691B3DE9FF00552BC7 /* CoverFlowLayout.m */; };
+		2755716D1B3DEB8C00552BC7 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2755716C1B3DEB8C00552BC7 /* Photo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +35,20 @@
 		2755713E1B3DDE3900552BC7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		275571401B3DDE3900552BC7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		275571411B3DDE3900552BC7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		275571431B3DDE3900552BC7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		275571441B3DDE3900552BC7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		275571471B3DDE3900552BC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		275571491B3DDE3900552BC7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2755714C1B3DDE3900552BC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		275571521B3DDE3900552BC7 /* CoverFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoverFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		275571571B3DDE3900552BC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		275571581B3DDE3900552BC7 /* CoverFlowTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoverFlowTests.m; sourceTree = "<group>"; };
+		275571621B3DDEC800552BC7 /* CoverFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverFlowViewController.h; sourceTree = "<group>"; };
+		275571631B3DDEC800552BC7 /* CoverFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverFlowViewController.m; sourceTree = "<group>"; };
+		275571651B3DE0A600552BC7 /* CoverFlowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverFlowCell.h; sourceTree = "<group>"; };
+		275571661B3DE0A600552BC7 /* CoverFlowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverFlowCell.m; sourceTree = "<group>"; };
+		275571681B3DE9FF00552BC7 /* CoverFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverFlowLayout.h; sourceTree = "<group>"; };
+		275571691B3DE9FF00552BC7 /* CoverFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverFlowLayout.m; sourceTree = "<group>"; };
+		2755716B1B3DEB8C00552BC7 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		2755716C1B3DEB8C00552BC7 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +92,14 @@
 			children = (
 				275571401B3DDE3900552BC7 /* AppDelegate.h */,
 				275571411B3DDE3900552BC7 /* AppDelegate.m */,
-				275571431B3DDE3900552BC7 /* ViewController.h */,
-				275571441B3DDE3900552BC7 /* ViewController.m */,
+				275571621B3DDEC800552BC7 /* CoverFlowViewController.h */,
+				275571631B3DDEC800552BC7 /* CoverFlowViewController.m */,
+				275571681B3DE9FF00552BC7 /* CoverFlowLayout.h */,
+				275571691B3DE9FF00552BC7 /* CoverFlowLayout.m */,
+				275571651B3DE0A600552BC7 /* CoverFlowCell.h */,
+				275571661B3DE0A600552BC7 /* CoverFlowCell.m */,
+				2755716B1B3DEB8C00552BC7 /* Photo.h */,
+				2755716C1B3DEB8C00552BC7 /* Photo.m */,
 				275571461B3DDE3900552BC7 /* Main.storyboard */,
 				275571491B3DDE3900552BC7 /* Images.xcassets */,
 				2755714B1B3DDE3900552BC7 /* LaunchScreen.xib */,
@@ -219,8 +234,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				275571451B3DDE3900552BC7 /* ViewController.m in Sources */,
+				2755716D1B3DEB8C00552BC7 /* Photo.m in Sources */,
 				275571421B3DDE3900552BC7 /* AppDelegate.m in Sources */,
+				2755716A1B3DE9FF00552BC7 /* CoverFlowLayout.m in Sources */,
+				275571671B3DE0A600552BC7 /* CoverFlowCell.m in Sources */,
+				275571641B3DDEC800552BC7 /* CoverFlowViewController.m in Sources */,
 				2755713F1B3DDE3900552BC7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
