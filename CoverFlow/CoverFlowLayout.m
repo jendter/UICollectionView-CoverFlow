@@ -97,15 +97,7 @@
 //    size = (CGSize){size.width+(self.collectionView.bounds.size.width/2), size.height};
     //self.collectionView.frame = CGRectMake(0, 0, newWidth, size.height);
     
-    // Temp Hardcode
-    // TAKE THIS OUT
-    CGFloat cellCount = 12; // Make this part of the CoverFlowDelegate protocol? (getCellCount)
-    
-    // DO NOT DELETE
-    if (![self.coverFlowDelegate layoutHasBeenViewed]) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cellCount/2 inSection:0];
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES]; // If animated = NO, breaks
-    }
+
     
     
     self.cellAttributes = attributesForAllRectElements;
@@ -169,7 +161,7 @@
         
         attributesForSingleElement.alpha =  distanceFromCenterInRangeZeroToOne;
         
-        CGFloat itemScaleFactor = 0.7;  // Only for debugging, if you want to experiment with different sizes
+        CGFloat itemScaleFactor = 0.8;  // Only for debugging, if you want to experiment with different sizes
         // Normally, it should be 1
         itemScaleFactor = itemScaleFactor + distanceFromCenterInRangeZeroToOne*0.45; // The center item should get bigger
         
@@ -191,7 +183,7 @@
         
         CATransform3D t = attributesForSingleElement.transform3D;
         t.m34 = 1.0/ -500;
-        t = CATransform3DRotate(t, degreesToRotate * M_PI / 180.0f, 0, 1, 0);
+        t = CATransform3DRotate(t, DegreesToRadians(degreesToRotate), 0, 1, 0);
         attributesForSingleElement.transform3D = t;
         
         
@@ -227,19 +219,19 @@
     }
     
     
-    i = 0;
-    for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
-        if (i == 0) {
-            
-        } else if (i < centerObjectPosition) {
-            
-        } else if (i == centerObjectPosition) {
-            
-        } else if (i > centerObjectPosition) {
-            
-        }
-        i++;
-    }
+//    i = 0;
+//    for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
+//        if (i == 0) {
+//            
+//        } else if (i < centerObjectPosition) {
+//            
+//        } else if (i == centerObjectPosition) {
+//            
+//        } else if (i > centerObjectPosition) {
+//            
+//        }
+//        i++;
+//    }
     
     
     

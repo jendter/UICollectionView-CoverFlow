@@ -17,6 +17,9 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *descriptionLabel;
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
+
 @property (nonatomic) BOOL hasBeenViewed;
 
 @end
@@ -46,6 +49,12 @@
 //    // Could be refactored to dynamically changed based
 //    UICollectionViewFlowLayout *currentLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
 //    [currentLayout setEstimatedItemSize:(CGSize){100, 200}];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    // Style choice: Starting at center of collection
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.photos.count/2 inSection:0];
+//        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -232,8 +241,8 @@
     
     
     CGFloat frameWidth = collectionViewLayout.collectionView.frame.size.width;
-    CGFloat cellWidth = 200; // HARDCODED FOR NOW, MANUALLY HAVE TO KEEP THIS AND STORYBOARD IN SYNC
-    CGFloat leftAndRightInset = (frameWidth/2)-(cellWidth/2);
+    CGFloat cellWidth = 140.0; // HARDCODED FOR NOW, MANUALLY HAVE TO KEEP THIS AND STORYBOARD IN SYNC
+    CGFloat leftAndRightInset = (frameWidth/2.0)-(cellWidth/2.0);
     
     //CGFloat cellWidth = [collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]].frame.size.width;
 
@@ -242,7 +251,7 @@
 //    
 //    NSLog(@"-------------cellWidth: %f", cellWidth);
     
-    return UIEdgeInsetsMake(10, leftAndRightInset, 10, leftAndRightInset); // 10's are hardcoded, this will break on an ipad.
+    return UIEdgeInsetsMake(70, leftAndRightInset, 70, leftAndRightInset); // 70's are hardcoded, this will break on an ipad.
 }
 
 /*

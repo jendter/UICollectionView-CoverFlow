@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DjA-Jo-HaF">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Cover Flow View Controller-->
@@ -18,8 +19,11 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZvP-RA-9NX">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ZvP-RA-9NX" secondAttribute="height" multiplier="1:1" id="6SW-yB-4vu"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Ibn-eZ-RNm" customClass="CoverFlowLayout">
-                                    <size key="itemSize" width="200" height="184"/>
+                                    <size key="itemSize" width="140" height="129"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -80,6 +84,9 @@
                             <constraint firstItem="ZvP-RA-9NX" firstAttribute="leading" secondItem="49A-Xk-BvU" secondAttribute="leading" id="p76-jY-bb2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="ZvP-RA-9NX" id="cZA-EI-0ic"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bZg-za-bi7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
