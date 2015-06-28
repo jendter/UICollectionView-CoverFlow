@@ -13,11 +13,10 @@
 @interface CoverFlowViewController ()
 
 @property (nonatomic, strong) NSMutableArray *photos;
-
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *descriptionLabel;
-
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic) CGSize cellSize;
 
 @end
 
@@ -31,6 +30,8 @@
     [self addDescriptiveLabels];
     
     [self loadSamplePhotos];
+    
+    self.cellSize = (CGSize){140, 129};
 
 }
 
@@ -214,7 +215,7 @@
     
     
     CGFloat frameWidth = collectionViewLayout.collectionView.frame.size.width;
-    CGFloat cellWidth = 140.0; // HARDCODED FOR NOW, MANUALLY HAVE TO KEEP THIS AND STORYBOARD IN SYNC
+    CGFloat cellWidth = self.cellSize.width;
     CGFloat leftAndRightInset = (frameWidth/2.0)-(cellWidth/2.0);
     
     return UIEdgeInsetsMake(70, leftAndRightInset, 70, leftAndRightInset); // 70's are hardcoded, this will break on an ipad.

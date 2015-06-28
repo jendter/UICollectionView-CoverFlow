@@ -10,13 +10,4 @@
 
 @implementation CoverFlowCell
 
-//- preferredLayoutAttributesFittingAttributes:
-
-//- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
-//    
-//    NSLog(@"Inside Cell");
-//    
-//    return layoutAttributes;
-//}
-
 @end

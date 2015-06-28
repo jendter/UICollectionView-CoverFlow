@@ -21,9 +21,7 @@
 
 
 - (void)prepareLayout {
-    
-    //NSLog(@"--------PREPARE FOR LAYOUT-----------");
-    
+        
     // Setting the basics that we will need later on
     CGRect visibleRegion;
     visibleRegion.origin = self.collectionView.contentOffset;
@@ -51,8 +49,7 @@
             attr.center = (CGPoint){previousAttr.center.x+50, previousAttr.center.y};
         }
         
-        attr.size = (CGSize){140,129};  // Hardcoded cell size. Make a delegate method in CoverFlowLayout to get this.
-        // Once we store the cell size in the viewController, we can update the viewController methods that rely on this too.
+        attr.size = [self.coverFlowDelegate cellSize];
         
         previousAttr = attr;
         [self.cellAttributes addObject:attr];

@@ -11,5 +11,6 @@
 @protocol CoverFlowDelegate <NSObject>
 
 -(void)cellIsCenteredAtIndexPath:(NSIndexPath *)indexPath;
+-(CGSize)cellSize;
 
 @end
