@@ -12,7 +12,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="OuL-qf-YsF" customClass="CoverFlowLayout">
-                            <size key="itemSize" width="200" height="184"/>
+                            <size key="itemSize" width="150" height="184"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
@@ -22,11 +22,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="184"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="184"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zeY-7z-ta0">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="184"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="184"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -38,7 +38,7 @@
                                     <constraint firstItem="zeY-7z-ta0" firstAttribute="top" secondItem="Ql9-dA-jWW" secondAttribute="top" id="i3S-Qw-TNq"/>
                                     <constraint firstAttribute="trailing" secondItem="zeY-7z-ta0" secondAttribute="trailing" id="u0x-2V-hoj"/>
                                 </constraints>
-                                <size key="customSize" width="200" height="184"/>
+                                <size key="customSize" width="150" height="184"/>
                                 <connections>
                                     <outlet property="imageView" destination="zeY-7z-ta0" id="hmT-w8-qY1"/>
                                 </connections>

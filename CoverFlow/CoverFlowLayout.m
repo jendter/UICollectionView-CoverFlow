@@ -18,21 +18,63 @@
 
 
 - (void)prepareLayout {
-
+    NSLog(@"--------PREPARE FOR LAYOUT-----------");
+//
+//    self.cellAttributes = [NSMutableArray array];
+//    
+//    CGSize contentSize = [self collectionViewContentSize];
+//    
+//    NSUInteger cellCount = [self.collectionView numberOfItemsInSection:0];
+//    
+//    NSLog(@"Cell count: %lu", cellCount);
+//    
+//    for (int i = 0; i < cellCount; i++) {
+//        
+////        CGFloat randX = arc4random_uniform(contentSize.width);
+////        CGFloat randY = arc4random_uniform(contentSize.height);
+//        
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+//        
+//        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+//        
+//        //attr.size.width = 100;
+//        attr.size = (CGSize){100, 100};
+//        
+//        [self.cellAttributes addObject:attr];
+//    }
+//    
+//    NSLog(@"%@", self.cellAttributes);
+    
+//    CGSize contentSize = [self collectionViewContentSize];
+//    
+//    NSUInteger cellCount = [self.collectionView numberOfItemsInSection:0];
+//    
+//    
+//
+//    }
+    
 }
 
 
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSArray* attributesForAllRectElements = [super layoutAttributesForElementsInRect:rect];
+    //attributesForAllRectElements = self.cellAttributes;
     
     CGRect visibleRegion;
     visibleRegion.origin = self.collectionView.contentOffset;
     visibleRegion.size   = self.collectionView.bounds.size;
     
+    //UICollectionViewLayoutAttributes *previousAttr;
     for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
+        
+        // Important!! Must keep in sync with storyboard.
+        // TODO: Make this a property
+        attributesForSingleElement.size = (CGSize){200, attributesForSingleElement.size.height};
         //NSLog(@"attributes: %@", attributesForSingleElement);
         //NSLog(@"Center: {%f,%f}", attributesForSingleElement.center.x, attributesForSingleElement.center.y);
        
+        // Warning: Insanely long variable names ahead.
+        
         CGFloat distanceFromCenterInPoints = fabs(attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2)));
         CGFloat distanceFromCenterInPointsWithNegativeNums = attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2));
         
@@ -45,19 +87,14 @@
         
         attributesForSingleElement.alpha =  distanceFromCenterInRangeZeroToOne;
         
-        CGFloat itemScaleFactor = 1;
+        CGFloat itemScaleFactor = 0.7;  // Only for debugging, if you want to experiment with different sizes
+                                        // Normally, it should be 1
         itemScaleFactor = itemScaleFactor + distanceFromCenterInRangeZeroToOne*0.45; // The center item should get bigger
         
         attributesForSingleElement.zIndex = distanceFromCenterInRangeZeroToOne*100; // So that the center element is always on top
         
         attributesForSingleElement.transform3D = CATransform3DScale(attributesForSingleElement.transform3D, itemScaleFactor, itemScaleFactor, 0);
         
-//        CGFloat rotationConstant;
-//        if (distanceFromCenterInPointsWithNegativeNums < 0) {
-//            rotationConstant = distanceFromCenterInRangeZeroToOne*-1;
-//        } else {
-//            rotationConstant = distanceFromCenterInRangeZeroToOne;
-//        }
         
         CGFloat degreesToRotate = (distanceFromCenterInRangeZeroToOneWithNegativeNums-1) * 230;
         
@@ -67,23 +104,52 @@
             degreesToRotate = 60.0;
         }
         
-        //degreesToRotate = fabs(degreesToRotate);
-        
         NSLog(@"Degrees to rotate: %f", degreesToRotate);
         
-        // Rotate for
-        //attributesForSingleElement.transform3D = CATransform3DRotate(attributesForSingleElement.transform3D, DegreesToRadians(degreesToRotate), 0, 1, 0);
         
         CATransform3D t = attributesForSingleElement.transform3D;
-        //Add the perspective!!!
         t.m34 = 1.0/ -500;
         t = CATransform3DRotate(t, degreesToRotate * M_PI / 180.0f, 0, 1, 0);
         attributesForSingleElement.transform3D = t;
         
+
+        NSLog(@"Current width:%f height:%f", attributesForSingleElement.frame.size.width, attributesForSingleElement.frame.size.height);
         
-        // Rotate everything for a slight top down perspective
-        //attributesForSingleElement.transform3D = CATransform3DRotate(attributesForSingleElement.transform3D, DegreesToRadians(20), 0.1, 0, 0);
+        
+        // TODO: (maybe) Rotate everything for a slight top down perspective
+
+        NSLog(@"current layout attributes: %@", attributesForSingleElement);
     }
+    
+    // Reposition the elements
+    
+    // Put this with the above loop
+    int centerObjectPosition = 0;
+    UICollectionViewLayoutAttributes *centerObject = [UICollectionViewLayoutAttributes new];
+    int i = 0;
+    for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
+        if (attributesForSingleElement.zIndex > centerObject.zIndex) {
+            centerObject = attributesForSingleElement;
+            centerObjectPosition = i;
+        }
+        i++;
+    }
+    
+    i = 0;
+    for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
+        if (i == 0) {
+            
+        } else if (i < centerObjectPosition) {
+            
+        } else if (i == centerObjectPosition) {
+            
+        } else if (i > centerObjectPosition) {
+            
+        }
+        i++;
+    }
+    
+    
     
     return attributesForAllRectElements;
 }

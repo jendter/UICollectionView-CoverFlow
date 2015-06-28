@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) NSMutableArray *photos;
 
+@property (nonatomic, strong) UILabel *imageSubjectLabel;
+
 @end
 
 @implementation CoverFlowViewController
@@ -28,8 +30,15 @@
     //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"CoverFlowCell"];
     
     // Do any additional setup after loading the view.
+    [self addDescriptiveLabels];
     
     [self loadSamplePhotos];
+    
+    
+//    // set the estimated item size to the smallest possible size an image can be
+//    // Could be refactored to dynamically changed based
+//    UICollectionViewFlowLayout *currentLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
+//    [currentLayout setEstimatedItemSize:(CGSize){100, 200}];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,6 +137,39 @@
     self.photos = [NSMutableArray arrayWithObjects:photo1, photo3, photo4, photo5, photo6, photo7, photo8, photo9, photo10, photo11, photo12, photo13, nil];
     
     NSLog(@"%@", self.photos);
+}
+
+
+#pragma mark - Adding Labels
+
+-(void)addDescriptiveLabels {
+    self.imageSubjectLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    self.imageSubjectLabel.textColor = [UIColor whiteColor];
+    
+    self.imageSubjectLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    self.imageSubjectLabel.text = @"Title";
+    
+    [self.view addSubview:self.imageSubjectLabel];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.imageSubjectLabel
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:-10]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.imageSubjectLabel
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1.0
+                                                           constant:10]];
+    
+    
 }
 
 

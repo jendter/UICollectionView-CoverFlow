@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CoverFlowViewController : UICollectionViewController
+@interface CoverFlowViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @end
