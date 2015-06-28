@@ -146,26 +146,19 @@
     // Do all of the 3d transforms
     for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
         
-        // Warning: Insanely long variable names ahead.
-        
-        // TODO: Make all of these instance methods
-        CGFloat distanceFromCenterInPoints = fabs(attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2)));
-        CGFloat distanceFromCenterInPointsWithNegativeNums = attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2));
-        
-        CGFloat distanceFromCenterInRangeZeroToOne = (visibleRegion.size.width - distanceFromCenterInPoints)/visibleRegion.size.width;
-        CGFloat distanceFromCenterInRangeZeroToOneWithNegativeNums = (visibleRegion.size.width - distanceFromCenterInPointsWithNegativeNums)/visibleRegion.size.width;
-        
-        
+        CGFloat distanceFromCenterInRangeZeroToOne = [self distanceFromCenterInRangeZeroToOne:attributesForSingleElement visibleRegion:visibleRegion];
+        CGFloat distanceFromCenterInRangeZeroToOneWithNegativeNums = [self distanceFromCenterInRangeZeroToOneWithNegativeNums:attributesForSingleElement visibleRegion:visibleRegion];
+
         //NSLog(@"The element at index: {%ld-%ld} is %f points from the center of the visible region.", attributesForSingleElement.indexPath.section, attributesForSingleElement.indexPath.item, distanceFromCenterInPoints );
         
         // Currently have opacity adjustment turned off (looks better when using the old cover flow style)
         //attributesForSingleElement.alpha =  distanceFromCenterInRangeZeroToOne;
         
-        CGFloat itemScaleFactor = 1;  // Only for debugging, if you want to experiment with different sizes
-        // Normally, it should be 1
+        CGFloat itemScaleFactor = 1;  // Only for debugging, if you want to experiment with different sizes. Normally, it should be 1.
+        
         itemScaleFactor = itemScaleFactor + distanceFromCenterInRangeZeroToOne*0.45; // The center item should get bigger
         
-        attributesForSingleElement.zIndex = distanceFromCenterInRangeZeroToOne*500; // So that the center element is always on top
+        attributesForSingleElement.zIndex = distanceFromCenterInRangeZeroToOne*500; // The center item should always be on top
         
         attributesForSingleElement.transform3D = CATransform3DScale(attributesForSingleElement.transform3D, itemScaleFactor, itemScaleFactor, 0);
         
@@ -224,9 +217,7 @@ CGFloat DegreesToRadians(CGFloat degrees) {
     
     for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
         
-        // TODO: Use the instance method versions of these, once they are made
-        CGFloat distanceFromCenterInPoints = fabs(attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2.00)));
-        CGFloat distanceFromCenterInRangeZeroToOne = (visibleRegion.size.width - distanceFromCenterInPoints)/visibleRegion.size.width;
+        CGFloat distanceFromCenterInRangeZeroToOne = [self distanceFromCenterInRangeZeroToOne:attributesForSingleElement visibleRegion:visibleRegion];
         int zIndex = (int)(distanceFromCenterInRangeZeroToOne*500);
         
         if (zIndex >= bestZIndex) {
@@ -243,5 +234,29 @@ CGFloat DegreesToRadians(CGFloat degrees) {
     
     return centerObject.indexPath;
 }
+
+-(CGFloat)distanceFromCenterInPointsWithNegativeNums:(UICollectionViewLayoutAttributes *)attributesForSingleElement visibleRegion:(CGRect)visibleRegion {
+    CGFloat distanceFromCenterInPointsWithNegativeNums = attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2.00));
+    return distanceFromCenterInPointsWithNegativeNums;
+}
+
+-(CGFloat)distanceFromCenterInPoints:(UICollectionViewLayoutAttributes *)attributesForSingleElement visibleRegion:(CGRect)visibleRegion {
+    CGFloat distanceFromCenterInPoints = fabs([self distanceFromCenterInPointsWithNegativeNums:attributesForSingleElement visibleRegion:visibleRegion]);
+    return distanceFromCenterInPoints;
+}
+
+
+-(CGFloat)distanceFromCenterInRangeZeroToOneWithNegativeNums:(UICollectionViewLayoutAttributes *)attributesForSingleElement visibleRegion:(CGRect)visibleRegion {
+    CGFloat distanceFromCenterInPointsWithNegativeNums = [self distanceFromCenterInPointsWithNegativeNums:attributesForSingleElement visibleRegion:visibleRegion];
+    CGFloat distanceFromCenterInRangeZeroToOneWithNegativeNums = (visibleRegion.size.width - distanceFromCenterInPointsWithNegativeNums)/visibleRegion.size.width;
+    return distanceFromCenterInRangeZeroToOneWithNegativeNums;
+}
+
+-(CGFloat)distanceFromCenterInRangeZeroToOne:(UICollectionViewLayoutAttributes *)attributesForSingleElement visibleRegion:(CGRect)visibleRegion {
+    CGFloat distanceFromCenterInPoints = [self distanceFromCenterInPoints:attributesForSingleElement visibleRegion:visibleRegion];
+    CGFloat distanceFromCenterInRangeZeroToOne = (visibleRegion.size.width - distanceFromCenterInPoints)/visibleRegion.size.width;
+    return distanceFromCenterInRangeZeroToOne;
+}
+
 
 @end
