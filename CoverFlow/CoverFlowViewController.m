@@ -26,13 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
-    //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"CoverFlowCell"];
-    
-    // Do any additional setup after loading the view.
     
     [self addDescriptiveLabels];
     
@@ -40,11 +34,12 @@
 
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    // Style choice: Starting at center of collection
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.photos.count/2 inSection:0];
-//        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-}
+// Style choice: Not beginning at start of collection
+//-(void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:4 inSection:0];
+//    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -140,8 +135,6 @@
     photo13.location = @"Philadelphia";
     
     self.photos = [NSMutableArray arrayWithObjects:photo1, photo3, photo4, photo5, photo6, photo7, photo9, photo10, photo11, photo12, photo13, nil];
-    
-    NSLog(@"%@", self.photos);
 }
 
 
@@ -217,19 +210,12 @@
 #pragma mark <UICollectionViewDelegateFlowLayout>
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    NSLog(@"-----------width %f",collectionViewLayout.collectionView.frame.size.width);
+    //NSLog(@"-----------width %f",collectionViewLayout.collectionView.frame.size.width);
     
     
     CGFloat frameWidth = collectionViewLayout.collectionView.frame.size.width;
     CGFloat cellWidth = 140.0; // HARDCODED FOR NOW, MANUALLY HAVE TO KEEP THIS AND STORYBOARD IN SYNC
     CGFloat leftAndRightInset = (frameWidth/2.0)-(cellWidth/2.0);
-    
-    //CGFloat cellWidth = [collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]].frame.size.width;
-
-//    CoverFlowCell *firstCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CoverFlowCell" forIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-//    CGFloat cellWidth = firstCell.frame.size.width;
-//    
-//    NSLog(@"-------------cellWidth: %f", cellWidth);
     
     return UIEdgeInsetsMake(70, leftAndRightInset, 70, leftAndRightInset); // 70's are hardcoded, this will break on an ipad.
 }
