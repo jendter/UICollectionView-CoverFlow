@@ -19,9 +19,6 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-
-@property (nonatomic) BOOL hasBeenViewed;
-
 @end
 
 @implementation CoverFlowViewController
@@ -40,15 +37,7 @@
     [self addDescriptiveLabels];
     
     [self loadSamplePhotos];
-    
-    self.hasBeenViewed = NO;
 
-    
-    
-//    // set the estimated item size to the smallest possible size an image can be
-//    // Could be refactored to dynamically changed based
-//    UICollectionViewFlowLayout *currentLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
-//    [currentLayout setEstimatedItemSize:(CGSize){100, 200}];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -222,15 +211,6 @@
     self.titleLabel.text = photo.subject;
     self.descriptionLabel.text = photo.location;
     
-}
-
--(BOOL)layoutHasBeenViewed {
-    if (self.hasBeenViewed) {
-        return YES;
-    } else {
-        self.hasBeenViewed = YES;
-        return NO;
-    }
 }
 
 

@@ -12,9 +12,11 @@
 @interface CoverFlowLayout ()
 
 @property (nonatomic, strong) IBOutlet id<CoverFlowDelegate> coverFlowDelegate;
-@property (nonatomic, strong) NSArray *cellAttributes;
+@property (nonatomic, strong) NSMutableArray *cellAttributes;
 //@property (nonatomic, strong) NSArray *testCellAttributes;
 @property (nonatomic) CGFloat totalWidth;
+
+//@property (nonatomic) BOOL hasInitialLayout;
 
 @end
 
@@ -25,17 +27,65 @@
     
     NSLog(@"--------PREPARE FOR LAYOUT-----------");
     
-    // Prepare all the currently known layoutAttribute and collectionView state information
-    CGRect rect = self.collectionView.bounds; // where the problem is
-    NSArray *attributesForAllRectElements = [super layoutAttributesForElementsInRect:rect];
-    //self.testCellAttributes = [super layoutAttributesForElementsInRect:rect];
     CGRect visibleRegion;
     visibleRegion.origin = self.collectionView.contentOffset;
     visibleRegion.size   = self.collectionView.bounds.size;
     
+    // Prepare all the currently known layoutAttribute and collectionView state information
+    //CGRect rect = self.collectionView.bounds; // where the problem is
+    //NSArray *attributesForAllRectElements = [super layoutAttributesForElementsInRect:rect];
+    
+    self.cellAttributes = [NSMutableArray array];
+    CGSize contentSize = self.collectionView.bounds.size;
+    NSLog(@"Content Size width: %f, height: %f", contentSize.width, contentSize.height);
+    
+    NSUInteger cellCount = [self.collectionView numberOfItemsInSection:0];
+    
+    
+    UICollectionViewLayoutAttributes *previousAttr;
+    for (int i = 0; i < cellCount; i++) {
+        
+        //CGFloat randX = arc4random_uniform(contentSize.width);
+        //CGFloat randY = arc4random_uniform(contentSize.height);
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+        
+        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+        
+        
+        if (i == 0) {
+            attr.center = (CGPoint){visibleRegion.size.width/2, visibleRegion.size.height/2};
+        } else {
+            //UICollectionViewLayoutAttributes *previousLayoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:i-1 inSection:0]];
+            NSLog(@"previous attribute: %@", previousAttr);
+            NSLog(@"Previous Center: {%f, %f}", previousAttr.center.x, previousAttr.center.y);
+            attr.center = (CGPoint){previousAttr.center.x+100, previousAttr.center.y};
+        }
+        
+        
+        
+        //attr.center = (CGPoint){randX, randY};
+        
+        attr.size = (CGSize){140,129};
+        
+        
+        previousAttr = attr;
+        [self.cellAttributes addObject:attr];
+    }
+    
+    
+    
+    NSArray *attributesForAllRectElements = [NSArray arrayWithArray:self.cellAttributes];
+    
+    
+    
+    //self.testCellAttributes = [super layoutAttributesForElementsInRect:rect];
+    
+    
     //NSLog(@"prepareLayout rect: origin{%f, %f} size{width:%f height:%f}", rect.origin.x, rect.origin.y, [self collectionViewContentSize].width, [self collectionViewContentSize].height);
     
     NSLog(@"visible region: origin{%f, %f} size{width:%f height:%f}", visibleRegion.origin.x, visibleRegion.origin.y, visibleRegion.size.width, visibleRegion.size.height);
+
 
     
     
@@ -56,7 +106,9 @@
             firstLayoutAttributes = attributesForSingleElement;
             //attributesForSingleElement.center = (CGPoint){visibleRegion.size.width/2, attributesForSingleElement.center.y};
         } else {
-            //attributesForSingleElement.center = (CGPoint){previousLayoutAttributes.center.x+300, attributesForSingleElement.center.y};
+
+            //attributesForSingleElement.center = (CGPoint){previousLayoutAttributes.center.x+100, attributesForSingleElement.center.y};
+            
         }
         
         // Calculate the insets
@@ -74,6 +126,14 @@
         previousLayoutAttributes = attributesForSingleElement;
     }
     
+//    if (!self.hasInitialLayout) {
+//        self.hasInitialLayout = YES;
+//        [self invalidateLayout];
+//    } else {
+//        self.hasInitialLayout = NO;
+//    }
+    
+    
     //newWidth = 2645; // HARDCODED, CHANGE
     
     //NSLog(@"------------INSET: %f", self.collectionView.contentInset.right);
@@ -89,6 +149,8 @@
     newWidth = newWidth + rightInset;
     
     //newWidth = newWidth + self.collectionView.contentInset.left + self.collectionView.contentInset.right;
+    
+    NSLog(@"------------FINAL SCROLL VIEW WIDTH: %f", newWidth);
     
     self.totalWidth = newWidth;
     
@@ -114,14 +176,34 @@
     // WORKING, does not use any attributes from the above method
     //NSArray* attributesForAllRectElements = [super layoutAttributesForElementsInRect:rect];
     
-    // Working, not needed
+    // Working
+    int count = 0;
+    int lastItem = 0;
     NSMutableArray *attributesForAllRectElements = [NSMutableArray new];
     for (UICollectionViewLayoutAttributes *attributesForSingleElement in self.cellAttributes) {
         if (CGRectIntersectsRect(rect, attributesForSingleElement.frame)) {
             [attributesForAllRectElements addObject:attributesForSingleElement];
             NSLog(@"Intersection!");
+            lastItem = count;
         }
+        
+        NSLog(@"last item: %i, count: %i", lastItem, count);
+        if (lastItem==count-1) {
+            // For debugging, we're going to try to add another element into the array
+            [attributesForAllRectElements addObject:attributesForSingleElement];
+        }
+        
+//        if (count < 4) {
+//            [attributesForAllRectElements addObject:attributesForSingleElement];
+//        }
+        
+        
+        count++;
     }
+    
+    NSLog(@"Number of attributes: %lu!", attributesForAllRectElements.count);
+
+    
     //NSArray* attributesForAllRectElements = ;
     //NSArray* attributesForAllRectElements = self.cellAttributes;
     

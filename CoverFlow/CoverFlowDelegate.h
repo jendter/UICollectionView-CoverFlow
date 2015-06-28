@@ -11,6 +11,5 @@
 @protocol CoverFlowDelegate <NSObject>
 
 -(void)cellIsCenteredAtIndexPath:(NSIndexPath *)indexPath;
--(BOOL)layoutHasBeenViewed;
 
 @end
