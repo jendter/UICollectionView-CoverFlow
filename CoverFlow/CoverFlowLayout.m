@@ -59,7 +59,7 @@
             //UICollectionViewLayoutAttributes *previousLayoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:i-1 inSection:0]];
             NSLog(@"previous attribute: %@", previousAttr);
             NSLog(@"Previous Center: {%f, %f}", previousAttr.center.x, previousAttr.center.y);
-            attr.center = (CGPoint){previousAttr.center.x+100, previousAttr.center.y};
+            attr.center = (CGPoint){previousAttr.center.x+50, previousAttr.center.y};
         }
         
         
@@ -71,6 +71,69 @@
         
         previousAttr = attr;
         [self.cellAttributes addObject:attr];
+    }
+    
+    
+    [self getIndexPathOfCenterForLayoutAttributes:self.cellAttributes inVisibleRegion:visibleRegion];
+    
+    // Correct for the center object having more spacing
+    //previousAttr = nil;
+    NSIndexPath *indexPathOfCenterLayoutAttribute = [self getIndexPathOfCenterForLayoutAttributes:self.cellAttributes inVisibleRegion:visibleRegion];
+    for (UICollectionViewLayoutAttributes *attributesForSingleElement in self.cellAttributes) {
+        
+        if (indexPathOfCenterLayoutAttribute.item == 0) {
+            // Item is at the start
+            NSLog(@"Item is at the start");
+            if (attributesForSingleElement.indexPath.item > indexPathOfCenterLayoutAttribute.item) {
+                //NSLog(@"Item is after");
+                attributesForSingleElement.center = (CGPoint){attributesForSingleElement.center.x+100, attributesForSingleElement.center.y};
+            } else {
+                //NSLog(@"Item is the same");
+            }
+        } else if (indexPathOfCenterLayoutAttribute.item == self.cellAttributes.count-1) {
+            // Item is at the end
+            //NSLog(@"Item is at the end");
+            if (attributesForSingleElement.indexPath.item < indexPathOfCenterLayoutAttribute.item) {
+                //NSLog(@"Item is before");
+                attributesForSingleElement.center = (CGPoint){attributesForSingleElement.center.x-100, attributesForSingleElement.center.y};
+            } else {
+               // NSLog(@"Item is the same");
+            }
+        } else {
+            // Item is inbetween
+            //NSLog(@"Item is inbetween");
+            if (attributesForSingleElement.indexPath.item > indexPathOfCenterLayoutAttribute.item) {
+                NSLog(@"Item is after");
+                attributesForSingleElement.center = (CGPoint){attributesForSingleElement.center.x+100, attributesForSingleElement.center.y};
+            } else if (attributesForSingleElement.indexPath.item < indexPathOfCenterLayoutAttribute.item) {
+                NSLog(@"Item is before");
+                attributesForSingleElement.center = (CGPoint){attributesForSingleElement.center.x-100, attributesForSingleElement.center.y};
+            } else {
+                NSLog(@"Item is the same");
+            }
+            
+        }
+        
+        //previousAttr = attributesForSingleElement;
+        
+        // If we are one behind the index path of the center object
+        // AND this isn't the first object
+            // Add
+        
+            // if the center item is zero, add to the right
+            // if the center item is
+        
+        // attributesForSingleElement.indexPath.item == 0
+//        if () {
+//            
+//        } else {
+//            
+//        }
+        
+        // if the center object is zero
+        
+        
+        
     }
     
     
@@ -187,11 +250,11 @@
             lastItem = count;
         }
         
-        NSLog(@"last item: %i, count: %i", lastItem, count);
-        if (lastItem==count-1) {
-            // For debugging, we're going to try to add another element into the array
-            [attributesForAllRectElements addObject:attributesForSingleElement];
-        }
+//        NSLog(@"last item: %i, count: %i", lastItem, count);
+//        if (lastItem==count-1) {
+//            // For debugging, we're going to try to add another element into the array
+//            [attributesForAllRectElements addObject:attributesForSingleElement];
+//        }
         
 //        if (count < 4) {
 //            [attributesForAllRectElements addObject:attributesForSingleElement];
@@ -231,6 +294,7 @@
         
         // Warning: Insanely long variable names ahead.
         
+        // TODO: Make all of these instance methods
         CGFloat distanceFromCenterInPoints = fabs(attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2)));
         CGFloat distanceFromCenterInPointsWithNegativeNums = attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2));
         
@@ -240,19 +304,19 @@
         
         NSLog(@"The element at index: {%ld-%ld} is %f points from the center of the visible region.", attributesForSingleElement.indexPath.section, attributesForSingleElement.indexPath.item, distanceFromCenterInPoints );
         
+        // Currently have opacity adjustment turned off (looks better when using the old cover flow style)
+        //attributesForSingleElement.alpha =  distanceFromCenterInRangeZeroToOne;
         
-        attributesForSingleElement.alpha =  distanceFromCenterInRangeZeroToOne;
-        
-        CGFloat itemScaleFactor = 0.8;  // Only for debugging, if you want to experiment with different sizes
+        CGFloat itemScaleFactor = 1;  // Only for debugging, if you want to experiment with different sizes
         // Normally, it should be 1
         itemScaleFactor = itemScaleFactor + distanceFromCenterInRangeZeroToOne*0.45; // The center item should get bigger
         
-        attributesForSingleElement.zIndex = distanceFromCenterInRangeZeroToOne*100; // So that the center element is always on top
+        attributesForSingleElement.zIndex = distanceFromCenterInRangeZeroToOne*500; // So that the center element is always on top
         
         attributesForSingleElement.transform3D = CATransform3DScale(attributesForSingleElement.transform3D, itemScaleFactor, itemScaleFactor, 0);
         
         
-        CGFloat degreesToRotate = (distanceFromCenterInRangeZeroToOneWithNegativeNums-1) * 230;
+        CGFloat degreesToRotate = (distanceFromCenterInRangeZeroToOneWithNegativeNums-1) * 400;
         
         if (degreesToRotate < -60.0) {
             degreesToRotate = -60.0;
@@ -338,5 +402,44 @@
 CGFloat DegreesToRadians(CGFloat degrees) {
     return degrees * M_PI / 180;
 };
+
+
+-(NSIndexPath *)getIndexPathOfCenterForLayoutAttributes:(NSArray *)layoutAttributes inVisibleRegion:(CGRect)visibleRegion {
+    
+    NSMutableArray *attributesForAllRectElements = [NSMutableArray array];
+    for (UICollectionViewLayoutAttributes *attributesForSingleElement in layoutAttributes) {
+        if (CGRectIntersectsRect(visibleRegion, attributesForSingleElement.frame)) {
+            [attributesForAllRectElements addObject:attributesForSingleElement];
+        }
+    }
+    
+    UICollectionViewLayoutAttributes *centerObject;
+    int bestZIndex = 0; // Init at lowest possible value
+    //UICollectionViewLayoutAttributes *centerAttribute;
+
+    for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
+        
+        // TODO: Use the instance method versions of these, once they are made
+        CGFloat distanceFromCenterInPoints = fabs(attributesForSingleElement.center.x-(visibleRegion.origin.x+(visibleRegion.size.width/2.00)));
+        CGFloat distanceFromCenterInRangeZeroToOne = (visibleRegion.size.width - distanceFromCenterInPoints)/visibleRegion.size.width;
+        int zIndex = (int)(distanceFromCenterInRangeZeroToOne*500);
+        
+        if (zIndex >= bestZIndex) {
+            centerObject = attributesForSingleElement;
+            bestZIndex = zIndex;
+            NSLog(@"new best!");
+        }
+
+        NSLog(@"checking float: %f", distanceFromCenterInPoints);
+        NSLog(@"most centered zIndex: %i", bestZIndex);
+        NSLog(@"zIndex: %i", zIndex);
+    }
+    
+    //NSLog(@"*************mostCenteredDistanceFromCenterInRangeZeroToOne is: %f", mostCenteredDistanceFromCenterInRangeZeroToOne);
+    
+    NSLog(@"--------------------IndexPath:, %@", centerObject.indexPath);
+    
+    return centerObject.indexPath;
+}
 
 @end
