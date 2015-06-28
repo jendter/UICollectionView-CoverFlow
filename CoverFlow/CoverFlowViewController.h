@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoverFlowDelegate.h"
 
-@interface CoverFlowViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface CoverFlowViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, CoverFlowDelegate>
 
 @end

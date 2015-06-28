@@ -49,6 +49,7 @@
 		275571691B3DE9FF00552BC7 /* CoverFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverFlowLayout.m; sourceTree = "<group>"; };
 		2755716B1B3DEB8C00552BC7 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		2755716C1B3DEB8C00552BC7 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		279CEE8D1B3FA8D000A435C2 /* CoverFlowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverFlowDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +95,7 @@
 				275571411B3DDE3900552BC7 /* AppDelegate.m */,
 				275571621B3DDEC800552BC7 /* CoverFlowViewController.h */,
 				275571631B3DDEC800552BC7 /* CoverFlowViewController.m */,
+				279CEE8D1B3FA8D000A435C2 /* CoverFlowDelegate.h */,
 				275571681B3DE9FF00552BC7 /* CoverFlowLayout.h */,
 				275571691B3DE9FF00552BC7 /* CoverFlowLayout.m */,
 				275571651B3DE0A600552BC7 /* CoverFlowCell.h */,
@@ -434,6 +436,7 @@
 				2755715E1B3DDE3900552BC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2755715F1B3DDE3900552BC7 /* Build configuration list for PBXNativeTarget "CoverFlowTests" */ = {
 			isa = XCConfigurationList;
@@ -442,6 +445,7 @@
 				275571611B3DDE3900552BC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

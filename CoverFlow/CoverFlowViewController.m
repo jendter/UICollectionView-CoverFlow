@@ -14,7 +14,10 @@
 
 @property (nonatomic, strong) NSMutableArray *photos;
 
-@property (nonatomic, strong) UILabel *imageSubjectLabel;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *descriptionLabel;
+
+@property (nonatomic) BOOL hasBeenViewed;
 
 @end
 
@@ -30,9 +33,13 @@
     //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"CoverFlowCell"];
     
     // Do any additional setup after loading the view.
+    
     [self addDescriptiveLabels];
     
     [self loadSamplePhotos];
+    
+    self.hasBeenViewed = NO;
+
     
     
 //    // set the estimated item size to the smallest possible size an image can be
@@ -76,65 +83,65 @@
     
     Photo *photo1 = [Photo new];
     photo1.imageName = @"australia";
-    photo1.subject = @"Travel";
+    photo1.subject = @"Opera House";
     photo1.location = @"Australia";
     
     Photo *photo3 = [Photo new];
     photo3.imageName = @"california";
-    photo3.subject = @"Travel";
+    photo3.subject = @"Found a Cave";
     photo3.location = @"California";
     
     Photo *photo4 = [Photo new];
     photo4.imageName = @"california2";
-    photo4.subject = @"Travel";
+    photo4.subject = @"Stairs";
     photo4.location = @"California";
     
     Photo *photo5 = [Photo new];
     photo5.imageName = @"california3";
-    photo5.subject = @"Travel";
+    photo5.subject = @"Old Gold Rush Town";
     photo5.location = @"California";
     
     Photo *photo6 = [Photo new];
     photo6.imageName = @"california4";
-    photo6.subject = @"Travel";
+    photo6.subject = @"Driving to SFO";
     photo6.location = @"California";
     
     Photo *photo7 = [Photo new];
     photo7.imageName = @"cat";
-    photo7.subject = @"Animal";
+    photo7.subject = @"An Everyday Cat";
     photo7.location = @"The Internet";
     
     Photo *photo8 = [Photo new];
     photo8.imageName = @"cat2";
-    photo8.subject = @"Animal";
+    photo8.subject = @"Dinner";
     photo8.location = @"The Internet";
     
     Photo *photo9 = [Photo new];
     photo9.imageName = @"coast";
-    photo9.subject = @"Travel";
+    photo9.subject = @"The Coast";
     photo9.location = @"Oregon";
     
     Photo *photo10 = [Photo new];
     photo10.imageName = @"forest";
-    photo10.subject = @"Hiking";
+    photo10.subject = @"Hermit House";
     photo10.location = @"Philadelphia";
     
     Photo *photo11 = [Photo new];
     photo11.imageName = @"park";
-    photo11.subject = @"Hiking";
+    photo11.subject = @"Hiking in Valley Green";
     photo11.location = @"Philadelphia";
     
     Photo *photo12 = [Photo new];
     photo12.imageName = @"waiting";
-    photo12.subject = @"Animal";
+    photo12.subject = @"Waiting is Tough";
     photo12.location = @"The Internet";
     
     Photo *photo13 = [Photo new];
     photo13.imageName = @"winter";
-    photo13.subject = @"Weather";
+    photo13.subject = @"Winter";
     photo13.location = @"Philadelphia";
     
-    self.photos = [NSMutableArray arrayWithObjects:photo1, photo3, photo4, photo5, photo6, photo7, photo8, photo9, photo10, photo11, photo12, photo13, nil];
+    self.photos = [NSMutableArray arrayWithObjects:photo1, photo3, photo4, photo5, photo6, photo7, photo9, photo10, photo11, photo12, photo13, nil];
     
     NSLog(@"%@", self.photos);
 }
@@ -143,33 +150,78 @@
 #pragma mark - Adding Labels
 
 -(void)addDescriptiveLabels {
-    self.imageSubjectLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     
-    self.imageSubjectLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.textColor = [UIColor whiteColor];
     
-    self.imageSubjectLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
-    self.imageSubjectLabel.text = @"Title";
+    self.titleLabel.text = @"Subject";
     
-    [self.view addSubview:self.imageSubjectLabel];
+    [self.view addSubview:self.titleLabel];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.imageSubjectLabel
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self.view
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1.0
-                                                           constant:-10]];
+                                                           constant:-45]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.imageSubjectLabel
-                                                          attribute:NSLayoutAttributeLeading
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                          attribute:NSLayoutAttributeCenterX
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self.view
-                                                          attribute:NSLayoutAttributeLeading
+                                                          attribute:NSLayoutAttributeCenterX
                                                          multiplier:1.0
                                                            constant:10]];
     
     
+    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    self.descriptionLabel.textColor = [UIColor grayColor];
+    
+    self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    self.descriptionLabel.text = @"Description";
+    
+    [self.view addSubview:self.descriptionLabel];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.titleLabel
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.0
+                                                           constant:10]];
+}
+
+#pragma mark - Cover Flow Delegate
+
+-(void)cellIsCenteredAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // When the Cover Flow Layout changes, we need to update the title and description labels
+    Photo *photo = self.photos[indexPath.item];
+    self.titleLabel.text = photo.subject;
+    self.descriptionLabel.text = photo.location;
+    
+}
+
+-(BOOL)layoutHasBeenViewed {
+    if (self.hasBeenViewed) {
+        return YES;
+    } else {
+        self.hasBeenViewed = YES;
+        return NO;
+    }
 }
 
 

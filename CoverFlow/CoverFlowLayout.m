@@ -7,9 +7,11 @@
 //
 
 #import "CoverFlowLayout.h"
+#import "CoverFlowDelegate.h"
 
 @interface CoverFlowLayout ()
 
+@property (nonatomic, strong) IBOutlet id<CoverFlowDelegate> coverFlowDelegate;
 @property (nonatomic, strong) NSMutableArray *cellAttributes;
 
 @end
@@ -18,40 +20,48 @@
 
 
 - (void)prepareLayout {
+    
     NSLog(@"--------PREPARE FOR LAYOUT-----------");
-//
-//    self.cellAttributes = [NSMutableArray array];
-//    
-//    CGSize contentSize = [self collectionViewContentSize];
-//    
-//    NSUInteger cellCount = [self.collectionView numberOfItemsInSection:0];
-//    
-//    NSLog(@"Cell count: %lu", cellCount);
-//    
-//    for (int i = 0; i < cellCount; i++) {
-//        
-////        CGFloat randX = arc4random_uniform(contentSize.width);
-////        CGFloat randY = arc4random_uniform(contentSize.height);
-//        
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-//        
-//        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-//        
-//        //attr.size.width = 100;
-//        attr.size = (CGSize){100, 100};
-//        
-//        [self.cellAttributes addObject:attr];
-//    }
-//    
-//    NSLog(@"%@", self.cellAttributes);
+    
+    NSLog(@"Delegate: %@", self.coverFlowDelegate);
+    
+    self.cellAttributes = [NSMutableArray array];
+    
+    CGSize contentSize = [self collectionViewContentSize];
+    
+    NSUInteger cellCount = [self.collectionView numberOfItemsInSection:0];
+    
+    NSLog(@"Cell count: %lu", cellCount);
+    
+    for (int i = 0; i < cellCount; i++) {
+        
+//        CGFloat randX = arc4random_uniform(contentSize.width);
+//        CGFloat randY = arc4random_uniform(contentSize.height);
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+        
+        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+        
+        //attr.size.width = 100;
+        attr.size = (CGSize){100, 184};
+        
+        [self.cellAttributes addObject:attr];
+    }
+    
+    NSLog(@"%@", self.cellAttributes);
     
 //    CGSize contentSize = [self collectionViewContentSize];
 //    
 //    NSUInteger cellCount = [self.collectionView numberOfItemsInSection:0];
-//    
-//    
-//
-//    }
+
+//    - (void)scrollToItemAtIndexPath:(NSIndexPath *)indexPath
+//atScrollPosition:(UICollectionViewScrollPosition)scrollPosition
+//animated:(BOOL)animated
+    
+    if (![self.coverFlowDelegate layoutHasBeenViewed]) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cellCount/2 inSection:0];
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    }
     
 }
 
@@ -134,6 +144,10 @@
         }
         i++;
     }
+    
+    // Tell the delegate which cell is currently centered
+    // In this example, the method in the delegate will set the title and description labels
+    [self.coverFlowDelegate cellIsCenteredAtIndexPath:centerObject.indexPath];
     
     i = 0;
     for (UICollectionViewLayoutAttributes *attributesForSingleElement in attributesForAllRectElements) {
