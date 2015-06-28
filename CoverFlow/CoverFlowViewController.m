@@ -225,7 +225,25 @@
 }
 
 
-#pragma mark <UICollectionViewDelegate>
+#pragma mark <UICollectionViewDelegateFlowLayout>
+
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    NSLog(@"-----------width %f",collectionViewLayout.collectionView.frame.size.width);
+    
+    
+    CGFloat frameWidth = collectionViewLayout.collectionView.frame.size.width;
+    CGFloat cellWidth = 200; // HARDCODED FOR NOW, MANUALLY HAVE TO KEEP THIS AND STORYBOARD IN SYNC
+    CGFloat leftAndRightInset = (frameWidth/2)-(cellWidth/2);
+    
+    //CGFloat cellWidth = [collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]].frame.size.width;
+
+//    CoverFlowCell *firstCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CoverFlowCell" forIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+//    CGFloat cellWidth = firstCell.frame.size.width;
+//    
+//    NSLog(@"-------------cellWidth: %f", cellWidth);
+    
+    return UIEdgeInsetsMake(10, leftAndRightInset, 10, leftAndRightInset); // 10's are hardcoded, this will break on an ipad.
+}
 
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking
